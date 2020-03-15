@@ -19,9 +19,15 @@
 	}
 	else
 	{
+<<<<<<< HEAD
 		$_SESSION["access"]=1;
 		$_SESSION["user"]=$_POST[uname];
 		header('Location: homepage.php');
+=======
+		$_SESSION['access']=1;
+		$_SESSION['user']=$_POST[u_name];
+		header('Location: homepage.html');
+>>>>>>> 69c25e03bb752d0a07e52fa195526f9744992531
     }
 	
 	mysqli_close($con);
