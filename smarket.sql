@@ -3,11 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
-<<<<<<< HEAD
 -- Generation Time: Mar 14, 2020 at 09:48 PM
-=======
--- Generation Time: Feb 29, 2020 at 10:22 PM
->>>>>>> 69c25e03bb752d0a07e52fa195526f9744992531
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.4.0
 
@@ -29,7 +25,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD
 -- Table structure for table `post`
 --
 
@@ -52,8 +47,6 @@ INSERT INTO `post` (`uname`, `type`, `work`) VALUES
 -- --------------------------------------------------------
 
 --
-=======
->>>>>>> 69c25e03bb752d0a07e52fa195526f9744992531
 -- Table structure for table `userdetails`
 --
 
@@ -71,13 +64,9 @@ INSERT INTO `userdetails` (`username`, `password`) VALUES
 ('jaya', 'iamrgv'),
 ('phaneendra', 'gudikandula'),
 ('deekshitha', 'devana'),
-<<<<<<< HEAD
 ('hardika', 'dave'),
 ('rgv', '123'),
 ('deekshita', '12345');
-=======
-('hardika', 'dave');
->>>>>>> 69c25e03bb752d0a07e52fa195526f9744992531
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
