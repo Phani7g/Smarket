@@ -4,128 +4,208 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
-	<style>
-	body
-	{
-		font-family: Arial, Helvetica, sans-serif;
-	}
-	img.avatar
-	{
-		width: 20%;
-		border-radius: 10%;
-		
-	}
-	.active
-	{
-		background-color: #4545D4;
-	}
-	ul
-	{
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-		overflow: hidden;
-		background-color: #3A3AA1;
-	}
-	li
-	{
-		float: left;
-		
-	}
-	li a
-	{
-		
-		display: block;
-		color: white;
-		text-align: center;
-		padding: 14px 16px;
-		text-decoration: none;
-	}
-	li a:hover
-	{
-		background-color: #4545D4 ;
-	}
-	
-	.sidenav
-	{
-		height: 100%;
-		width: 0;
-		position: fixed;
-		z-index: 1;
-		top: 1;
-		left: 1;
-		background-color: #3A3AA1;
-		overflow-x: hidden;
-		transition: 0.5s;
-		padding-top: 60px;
-	}
-	.sidenav a
-	{
-		padding: 8px 8px 8px 32px;
-		text-decoration: none;
-		font-size: 18px;
-		color: white;
-		display: block;
-		transition: 0.3s;
-	}
-	.sidenav a:hover
-	{
-		background-color: #4545D4 ;
-		color: 
-	}
-
-	.sidenav .closebtn
-	{
-		position: absolute;
-		top: 0;
-		right: 5px;
-		font-size: 30px;
-		margin-left: 10px;
-	}
-	.sidenav .closebtn:hover
-	{
-		background-color: #3A3AA1;
-		color: red;
-	}
-	@media screen and (max-height: 450px)
-	{
-		.sidenav {padding-top: 15px;}
-		.sidenav a {font-size: 10px;}
-	}
-	
-	</style>
+	<title>Categories</title>
+	<link rel="stylesheet" href="responses.css">
 </head>
 <body>
-	<img src="logo.png" alt="Avatar" class="avatar" align="top">
+	<a href="homepage.php"><img src="logo.png" alt="sMARKET" class="logo"></a>
 	<ul>
-		<li><a span style="font-size:13.5px;cursor:pointer;left:0" onclick="openNav()">&#9776;</span></a></li>
+		<li><a span style="font-size:13.5px;cursor:pointer;left:0" onclick="toggleNav()">&#9776;</span></a></li>
 		<li><a href="homepage.php" >HOME</a></li>
 		<li><a href="freelancer.php">FREELANCERS</a></li>
 		<li><a class="active" href="categories.php">CATEGORIES</a></li>
-		<li><a href="myaccount.php">MY ACCOUNT</a></li>
+		<li><a href="myaccount.php" style="float:right;">MY ACCOUNT</a></li>
 	</ul>
 	<div id="mySidenav" class="sidenav" >
-		
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<a href="about.php">About</a>
 		<a href="services.php">Services</a>
-		<a href="clients.php">Clients</a>
-		<a href="Loginpage.html">Logout</a>
+		<a href="help.php">Help</a>
+		<a href="developers.php">Developers</a>
+		<a href="logout.php">Logout</a>
 	</div>
-	<br>
+	<div id="main">
+			<br>
+			<?php
+					echo " Hello ".$_SESSION["user"].", Welcome<br>";
+			?>
+			<br>
+
+			<button onclick="togglePost()">Post</button>
+			<button onclick="toggleFreelancer()">Hired Lancers</button>
+
+			<br><br>
+
+			<div id="pr" class="modal">
+				<center>
+				<h3 style="background-color:lightgray; width:290px; padding:5px;">RESPONSES FOR YOUR POSTS</h3>
+				<br>
+				<table style="text-align:center; border:2px solid black;" cellpadding="5px">
+
+						<?php
+						$con=mysqli_connect("localhost","kakaral","Harika@12345");
+						if(!$con)
+						{
+							die('Error connecting to server :'.mysqli_error());
+						}
+						mysqli_select_db($con,"kakaral_wp1");
+						$q1 = "SELECT * FROM post WHERE uname='$_SESSION[user]'";
+						if($r1 = $con->query($q1))
+						{
+							    
+							echo '
+								<tr>
+									<th><b>POST<b></th>
+									<th><b>USERNAME<b></th>
+									<th><b>FULLNAME<b></th>
+									<th><b>DEGREE<b></th>
+									<th><b>SKILLS<b></th>
+									<th><b>E-MAIL<b></th>
+								</tr>';
+						    while($row1 = $r1->fetch_assoc())
+						    {
+						        $sql = "SELECT * FROM response WHERE postid='$row1[id]'";
+						        if ($result = $con->query($sql))
+						        {
+
+								    while ($row = $result->fetch_assoc())
+								    {
+										$field1name = $row1["type"];
+										$field2name = $row["rname"];
+										$field3name = $row["rfullname"];
+										$field4name = $row["rdegree"];
+										$field5name = $row["rskills"];
+										$field6name = $row["remail"];
+										echo '
+													<tr>
+														<td><b>'.$field1name.'<b></td>
+														<td>'.$field2name.'</td>
+														<td>'.$field3name.'</td>
+														<td>'.$field4name.'</td>
+														<td>'.$field5name.'</td>
+														<td>'.$field6name.'</td>
+													</tr>';
+							        }
+						        }
+						    }
+				    	            
+					    }
+				        $con->close();
+				        ?>
+
+			</table>
+			<br><br>
+		</center>
+	</div>
+
+	<div id="hl" class="modal2">
+		<center>
+		<h3 style="background-color:lightgray; width:240px; padding:5px;">HIRED LANCERS</h3>
+		<br>
+		<table style="text-align:center; border:2px solid black;" cellpadding="5px">
+
+				<?php
+				$con=mysqli_connect("localhost","kakaral","Harika@12345");
+				if(!$con)
+				{
+					die('Error connecting to server :'.mysqli_error());
+				}
+				mysqli_select_db($con,"kakaral_wp1");
+				$q1 = "SELECT * FROM hired WHERE hname='$_SESSION[user]'";
+				if($r1 = $con->query($q1))
+				{
+				    
+					echo '
+						<tr>
+							<th><b>USERNAME<b></th>
+							<th><b>FULLNAME<b></th>
+							<th><b>DEGREE<b></th>
+							<th><b>SKILLS<b></th>
+							<th><b>E-MAIL<b></th>
+						</tr>';
+				    
+				    while($row1 = $r1->fetch_assoc())
+				    {
+				        $sql = "SELECT * FROM freelancers WHERE fullname='$row1[fullname]'";
+				        if ($result = $con->query($sql))
+				        {
+								
+
+					        while ($row = $result->fetch_assoc())
+						    {
+							    $field1name = $row["name"];
+							    $field2name = $row["fullname"];
+							    $field3name = $row["degree"];
+							    $field4name = $row["skills"];
+							    $field6name = $row["email"];
+							    echo '
+									<tr>
+										<td>'.$field1name.'</td>
+										<td>'.$field2name.'</td>
+										<td>'.$field3name.'</td>
+										<td>'.$field4name.'</td>
+										<td>'.$field6name.'</td>
+									</tr>';
+						    }
+					    }
+				    }
+			        
+			    }
+		    	$con->close();
+			    ?>
+
+	</table>
+	<br><br>
+</center>
+</div>
+	</div>
 	<script>
 		function openNav()
 		{
 			document.getElementById("mySidenav").style.width = "200px";
+			document.getElementById("main").style.marginLeft = "200px";
 		}
-
 		function closeNav()
 		{
 			document.getElementById("mySidenav").style.width = "0";
+			document.getElementById("main").style.marginLeft= "0";
 		}
-		
-		var modal = document.getElementById('wp1');
-	
+		function toggleNav()
+		{
+			var element1 = document.getElementById('mySidenav');
+			if(element1.style.width == "200px")
+			{
+				closeNav();
+			}
+			else
+			{
+				openNav();
+			}
+		}
+		function togglePost()
+		{
+			var element2 = document.getElementById('pr');
+			if(element2.style.display=='block')
+			{
+				element2.style.display='none';
+			}
+			else
+			{
+				element2.style.display='block';
+			}
+		}
+		function toggleFreelancer()
+		{
+			var element3 = document.getElementById('hl');
+			if(element3.style.display=='block')
+			{
+				element3.style.display='none';
+			}
+			else
+			{
+				element3.style.display='block';
+			}
+		}
+
 	</script>
 </body>
 </html>
